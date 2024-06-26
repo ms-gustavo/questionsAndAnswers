@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import Question, { IQuestionForm } from "../database/Question";
 import { IDBQuestions, QuestionSchema } from "../utils/questionSchema";
+import Answer, { IAnswerForm } from "../database/Answer";
 
 const router = express.Router();
 
@@ -57,11 +58,30 @@ router.post(
         return res.redirect("/error?type=form-error");
       }
 
-      await Question.create({ title, description });
-
-      res.redirect("/");
+      await Question.create({ title, description }).then(() => {
+        res.redirect("/");
+      });
     } catch (error: any) {
       console.error("Erro ao criar pergunta:", error);
+      res.redirect("/error?type=form-error");
+    }
+  }
+);
+
+router.post(
+  "/send-answer",
+  async (req: Request<IAnswerForm>, res: Response) => {
+    const { body, questionId }: IAnswerForm = req.body;
+    try {
+      if (!body || !questionId) {
+        return res.redirect("/error?type=form-error");
+      }
+
+      await Answer.create({ body, questionId }).then(() => {
+        res.redirect(`/question/${questionId}`);
+      });
+    } catch (error: any) {
+      console.error("Erro ao responder pergunta:", error);
       res.redirect("/error?type=form-error");
     }
   }
