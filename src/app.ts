@@ -4,16 +4,18 @@ import connection from "../database/database";
 import dotenv from "dotenv";
 import questionRoutes from "../routes/questionRoutes";
 import Question from "../database/Question";
+import Answer from "../database/Answer";
 dotenv.config();
 
 const PORT = process.env.PORT || 8080;
 
 connection
   .authenticate()
-  .then(() => {
+  .then(async () => {
     console.log(`Conexão feita com o DB!`);
 
-    return Question.sync({ force: false });
+    await Question.sync({ force: false });
+    return await Answer.sync({ force: false });
   })
   .then(() => {
     console.log("Modelos sincronizados com o banco de dados.");
