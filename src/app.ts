@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import connection from "../database/database";
 import dotenv from "dotenv";
@@ -25,7 +25,9 @@ connection
     app.use(bodyParser.json());
 
     app.use("/", questionRoutes);
-
+    app.use((req: Request, res: Response) => {
+      res.status(404).render("404");
+    });
     app.listen(PORT, () => {
       console.log(`Servidor rodando na porta ${PORT}`);
     });

@@ -1,0 +1,17 @@
+<%- include ('partials/header.ejs') %>
+<body>
+  <%- include ('partials/navbar.ejs') %>
+  <div class="container">
+    <div id="error">
+      <% if (type === 'form-error') { %>
+      <h1>Erro ao enviar dados do formulário.</h1>
+      <% } else if (type === 'list-unique-error') { %>
+      <h1>Ocorreu um erro.</h1>
+      <% } else if (type === 'list-error') { %>
+      <h1>Ocorreu um erro ao carregar a página.</h1>
+      <% } %>
+      <a href="<%- action %>"><%- linkText %></a>
+    </div>
+  </div>
+</body>
+<%- include ('partials/footer.ejs') %>
