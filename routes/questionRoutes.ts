@@ -1,6 +1,11 @@
 import express, { Request, Response } from "express";
 import Question, { IQuestionForm } from "../database/Question";
-import { IDBQuestions, QuestionSchema } from "../utils/questionSchema";
+import {
+  AnswerSchema,
+  IDBAnswers,
+  IDBQuestions,
+  QuestionSchema,
+} from "../utils/questionSchema";
 import Answer, { IAnswerForm } from "../database/Answer";
 
 const router = express.Router();
@@ -37,12 +42,26 @@ router.get("/question/:id", async (req: Request, res: Response) => {
       raw: true,
     });
 
-    if (question) {
-      const parsedQuestion: IDBQuestions = QuestionSchema.parse(question);
-      return res.render("question", { question: parsedQuestion });
-    } else {
-      res.redirect("/error?type=list-unique-error");
+    if (!question) {
+      return res.redirect("/error?type=list-unique-error");
     }
+
+    const answers = await Answer.findAll({
+      where: {
+        questionId: id,
+      },
+      raw: true,
+      order: [["id", "desc"]],
+    });
+    const parsedAnswers: IDBAnswers[] = answers.map((answer) =>
+      AnswerSchema.parse(answer)
+    );
+    const parsedQuestion: IDBQuestions = QuestionSchema.parse(question);
+
+    return res.render("question", {
+      question: parsedQuestion,
+      answers: parsedAnswers,
+    });
   } catch (error: any) {
     console.error("Erro ao buscar pergunta:", error);
     res.redirect("/error?type=list-unique-error");

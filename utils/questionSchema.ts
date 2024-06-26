@@ -9,3 +9,10 @@ export const QuestionSchema = z.object({
 });
 
 export type IDBQuestions = z.infer<typeof QuestionSchema>;
+
+export const AnswerSchema = z.object({
+  body: z.string(),
+  questionId: z.number(),
+});
+
+export type IDBAnswers = z.infer<typeof AnswerSchema>;
