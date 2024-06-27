@@ -28,7 +28,7 @@
   <ul>
     <li><strong>TypeScript</strong>: Um superconjunto de JavaScript que adiciona tipagem estática opcional.</li>
     <li><strong>MySQL</strong>: Um sistema de gerenciamento de banco de dados relacional.</li>
-    <li><strong>Jest</strong>:</li>Um framework de testes em JavaScript que facilita a criação e execução de testes unitários e de integração.
+    <li><strong>Jest</strong>: Um framework de testes em JavaScript que facilita a criação e execução de testes unitários e de integração.</li>
     <li><strong>Sequelize</strong>: Um ORM (Object-Relational Mapping) para Node.js, utilizado para facilitar a interação com bancos de dados relacionais.</li>
     <li><strong>EJS</strong>: Um mecanismo de templates simples e eficiente para renderização de HTML no servidor.</li>
     <li><strong>Zod</strong>: Uma biblioteca de validação de esquemas em TypeScript para validação de dados.</li>
